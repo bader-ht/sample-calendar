@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'apps.customapi',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
 
 ]
 
@@ -124,3 +128,20 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': "%d-%m-%Y %H:%M:%S",
+    'DATETIME_INPUT_FORMATS': ["%d-%m-%Y %H:%M:%S"],
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    )
+}
+REST_USE_JWT = True
+
+JWT_AUTH_COOKIE = 'app-auth'
+JWT_AUTH_REFRESH_COOKIE = 'refresh-token'
+
+DATETIME_INPUT_FORMATS = [
+  "%d-%m-%Y %H:%M:%S"
+  "%d/%m/%Y %H:%M:%S"
+]
