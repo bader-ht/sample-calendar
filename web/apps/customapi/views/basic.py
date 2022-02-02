@@ -3,6 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework import generics
 from apps.customapi.serializers.custom import *
+from apps.customapi.permissions import *
+from apps.customapi.models import *
 
 class CalendarCreateAPIView(generics.CreateAPIView):
     # Permission class to ensure user is logged in to access this view
@@ -25,17 +27,17 @@ class CalendarCreateAPIView(generics.CreateAPIView):
         )
 
 class CalendarRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsMyAccount]
     serializer_class = CalendarSerializer
 
 
-class CalendarDeleteAPIView(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+class CalendarRetrieveUpdateAPIView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated, IsMyAccount]
     serializer_class = CalendarSerializer
+    queryset = Calendar.objects.all()
 
 class CalendarDeleteAPIView(generics.DestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsMyAccount]
     serializer_class = CalendarSerializer
+    queryset = Calendar.objects.all()
 
-    # def get_queryset(self):
-    #     return 
