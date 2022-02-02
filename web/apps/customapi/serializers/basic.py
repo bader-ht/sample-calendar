@@ -17,11 +17,9 @@ class CalendarSerializer(serializers.ModelSerializer):
 		start = attrs.get("start_date")
 		end = attrs.get("end_date")
 		
-		query = Q(user=user) & Q(start_date__lte=start) & Q(start_date__gte=end) | \
-			 Q(end_date__lte=start) & Q(end_date__gte=end) | \
-			 Q(start_date__lte=end) & Q(start_date__gte=end) | \
-			 Q(end_date__lte=end) & Q(end_date__gte=end) | \
-			 Q(start_date__lte=start) & Q(end_date__gte=end)
+		query = Q(user=user) & ( Q(start_date__lte=start) & Q(end_date__gt=start) | \
+			 Q(start_date__lt=end) & Q(end_date__gte=end) | \
+			 Q(start_date__gte=end) & Q(end_date__lte=end))
 		
 		queryset = Calendar.objects.filter(query)
 
@@ -32,7 +30,6 @@ class CalendarSerializer(serializers.ModelSerializer):
 
 
 class ReservationSerializer(serializers.ModelSerializer):
-	
 	class Meta:
 		model = Reservation
 		fields = '__all__' 
@@ -43,20 +40,18 @@ class ReservationSerializer(serializers.ModelSerializer):
 		Overridden to include checking of schedules (per user) to prevent overlapping timmings
 		'''
 		attrs = super().validate(attrs)
-		user = attrs.get("user")
+		user = attrs.get("calendar").user
 		start = attrs.get("start_date")
 		end = attrs.get("end_date")
 		
-		query = Q(user=user) & Q(start_date__lte=start) & Q(start_date__gte=end) | \
-			 Q(end_date__lte=start) & Q(end_date__gte=end) | \
-			 Q(start_date__lte=end) & Q(start_date__gte=end) | \
-			 Q(end_date__lte=end) & Q(end_date__gte=end) | \
-			 Q(start_date__lte=start) & Q(end_date__gte=end)
+		query = Q(user=user) & ( Q(start_date__lte=start) & Q(end_date__gt=start) | \
+			 Q(start_date__lt=end) & Q(end_date__gte=end) | \
+			 Q(start_date__gte=end) & Q(end_date__lte=end))
 		
-		queryset = Calendar.objects.filter(query)
+		queryset = Reservation.objects.filter(query)
 
 		if queryset.exists():
-			raise ValidationError("The time you added conflicts with your existing schedule")
+			raise ValidationError("This time slot has already been booked.")
 		
 		return attrs
 
