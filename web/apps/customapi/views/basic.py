@@ -52,12 +52,13 @@ class ReservationCreateAPIView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         data = request.data
-        start = timezone.datetime.strptime(data['start_date'], "%d-%m-%Y %H:%M:%S")
-        
+        start = timezone.datetime.strptime(data['start_date'], "%d-%m-%Y %H:%M:%S:%Z")
+
         
         cal = Calendar.objects.get(id=data['calendar'])
         data['user'] = cal.user.id
         data['end_date'] = start + datetime.timedelta(minutes=cal.interval)
+
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)

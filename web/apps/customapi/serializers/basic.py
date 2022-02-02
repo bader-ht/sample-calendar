@@ -40,10 +40,14 @@ class ReservationSerializer(serializers.ModelSerializer):
 		Overridden to include checking of schedules (per user) to prevent overlapping timmings
 		'''
 		attrs = super().validate(attrs)
-		user = attrs.get("calendar").user
+		calendar = attrs.get("calendar")  
+		user = calendar.user
 		start = attrs.get("start_date")
 		end = attrs.get("end_date")
 		
+		if not (start >= calendar.start_date and end <= calendar.end_date):
+			raise ValidationError("The time you are attempting to book is not valid.")
+
 		query = Q(user=user) & ( Q(start_date__lte=start) & Q(end_date__gt=start) | \
 			 Q(start_date__lt=end) & Q(end_date__gte=end) | \
 			 Q(start_date__gte=end) & Q(end_date__lte=end))
