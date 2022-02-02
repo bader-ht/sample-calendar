@@ -32,9 +32,10 @@ class CalendarRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     # Permission class to ensure user is logged in to access this view
     permission_classes = [IsAuthenticated, IsMyAccount]
     serializer_class = CalendarSerializer
+    queryset = Calendar.objects.all()
 
 
-class CalendarRetrieveUpdateAPIView(generics.ListAPIView):
+class CalendarListAPIView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = CalendarSerializer
     # Queryset can be updated to return only the calender items of the requester.
