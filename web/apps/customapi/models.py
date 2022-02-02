@@ -15,5 +15,5 @@ class Calendar(models.Model):
 class Reservation(models.Model):
 	email = models.EmailField()
 	full_name = models.CharField(max_length=255)
-	start_time = models.DateTimeField()
-	end_time = models.DateTimeField()
+	start_date = models.DateTimeField()
+	end_date = models.DateTimeField()
