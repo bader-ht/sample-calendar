@@ -10,4 +10,5 @@ urlpatterns = [
     path("calendar/edit/<int:pk>/", CalendarRetrieveUpdateAPIView.as_view(), name="calendar-edit"),
     path("calendar/list/", CalendarRetrieveUpdateAPIView.as_view(), name="calendar-edit"),
     path("calendar/delete/<int:pk>/", CalendarDeleteAPIView.as_view(), name="calendar-delete"),
+    path("reserve/", ReservationCreateAPIView.as_view(), name="calendar-create"),
 ]
