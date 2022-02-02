@@ -113,3 +113,9 @@ http://127.0.0.1:8000/api/reserve/
 	"calendar":"31"
 }	
 ```
+
+## Admin Panel
+http://127.0.0.1:8000/admin/
+
+username: admin
+password: calendar2021
