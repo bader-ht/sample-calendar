@@ -129,8 +129,8 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
-    'DATETIME_FORMAT': "%d-%m-%Y %H:%M:%S",
-    'DATETIME_INPUT_FORMATS': ["%d-%m-%Y %H:%M:%S"],
+    'DATETIME_FORMAT': "%d-%m-%Y %H:%M:%S:%Z",
+    'DATETIME_INPUT_FORMATS': ["%d-%m-%Y %H:%M:%S:%Z"],
     
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
@@ -142,6 +142,6 @@ JWT_AUTH_COOKIE = 'app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'refresh-token'
 
 DATETIME_INPUT_FORMATS = [
-  "%d-%m-%Y %H:%M:%S"
-  "%d/%m/%Y %H:%M:%S"
+  "%d-%m-%Y %H:%M:%S:%Z"
+  "%d/%m/%Y %H:%M:%S:%Z"
 ]
