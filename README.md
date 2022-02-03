@@ -24,6 +24,10 @@ web/manage.py runserver 0.0.0.0:8000
 
 To access logged in APIs, the user must first login with a username and password via the login endoint, which will return a JSON Web Token (JWT)
 
+Login URL:
+http://127.0.0.1:8000/api/accounts/login/
+
+
 ```
 {
 	"username":"user1",
